@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function* downloadShare(next) {
-  let { id } = this.request.fields;
+  let { id } = this.query;
   let share;
   try {
     share = yield Share.getById(id);

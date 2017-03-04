@@ -7,5 +7,5 @@ module.exports = function(api) {
     show: ShareCtrl.getShare,
   });
   let router = api.loadMethods();
-  router.post('/shares/download', ShareCtrl.downloadShare);
+  router.get('/shares/download', ShareCtrl.downloadShare);
 };

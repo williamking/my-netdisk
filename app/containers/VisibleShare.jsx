@@ -21,7 +21,7 @@ function mapDispatchToProps(dispatch) {
     },
     download: (id, filename) => {
       let a = document.createElement('a');
-      a.href = `/api/files/${id}`;
+      a.href = `/api/shares/download?id=${id}`;
       a.download = filename;
       a.click();
     }

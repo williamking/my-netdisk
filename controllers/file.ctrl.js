@@ -53,7 +53,6 @@ function* downloadFile(next) {
   }
   let data;
   try {
-    let path = require('path');
     data = yield fs.readFile(path.join(__dirname, file.path));
   } catch (e) {
     throw e;
