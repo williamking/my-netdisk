@@ -6,7 +6,8 @@ const gulp = require('gulp'),
   browserSync = require('browser-sync').create(),
   server = require('gulp-develop-server'),
   clean = require('gulp-clean'),
-  gulpSync = require('gulp-sync')(gulp);
+  gulpSync = require('gulp-sync')(gulp),
+  uglify = require('gulp-uglify');
 
 gulp.task('browser-sync', () => {
   browserSync.init({
@@ -20,6 +21,12 @@ gulp.task('webpack', () => {
 
 gulp.task('clean', () => {
   return gulp.src(['public/dist']).pipe(clean());
+});
+
+gulp.task('minify', () => {
+  return gulp.src('public/dist/*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('public/dist'));
 });
 
 gulp.task('reload', () => {
@@ -39,7 +46,7 @@ gulp.task('server-restart', () => {
   server.restart();
 })
 
-gulp.task('build', gulpSync.sync(['clean', 'webpack']));
+gulp.task('build', gulpSync.sync(['clean', 'webpack', 'minify']));
 
 gulp.task('watch', () => {
   gulp.watch(['app/*', 'app/**/*'], gulpSync.sync(['clean', 'webpack', 'reload']));

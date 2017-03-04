@@ -66,7 +66,7 @@ class FileList extends Component {
             <Button>复制该链接</Button>
           </Modal.Footer>
         </Modal>
-        <Table responsive>
+        <Table>
           <thead>
             <tr>
               <th className="filename">Filename</th>

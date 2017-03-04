@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const bodyParse = require('koa-better-body');
 const session = require('koa-session');
 const convert = require('koa-convert');
+const compress = require('koa-compress');
 
 setMiddleWares();
 setRouter();
@@ -29,6 +30,7 @@ app.listen(port, () => {
 
 // set middlewares
 function setMiddleWares() {
+  app.use(compress());
   app.use(convert(session(app)));
   app.use(serve('public'));
   app.use(bodyParse());
