@@ -47,3 +47,5 @@ gulp.task('watch', () => {
 
 gulp.task('default', gulpSync.sync(['clean', 'webpack', 'server-start',
   'browser-sync', 'watch']));
+
+gulp.task('build', gulpSync.sync['clean', 'webpack']);
