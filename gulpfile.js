@@ -39,6 +39,8 @@ gulp.task('server-restart', () => {
   server.restart();
 })
 
+gulp.task('build', gulpSync.sync(['clean', 'webpack']));
+
 gulp.task('watch', () => {
   gulp.watch(['app/*', 'app/**/*'], gulpSync.sync(['clean', 'webpack', 'reload']));
   gulp.watch(['config.js', 'app.js', 'models/*', 'controllers/*', 'routers/*', 'middlewares/*'], gulpSync.sync(['server-restart', 'reload']));
@@ -46,5 +48,3 @@ gulp.task('watch', () => {
 
 gulp.task('default', gulpSync.sync(['clean', 'webpack', 'server-start',
   'browser-sync', 'watch']));
-
-gulp.task('build', gulpSync.sync['clean', 'webpack']);

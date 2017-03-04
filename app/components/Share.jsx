@@ -24,7 +24,7 @@ class Share extends Component {
       download(id, filename);
     };
     return (
-      <Panel className="file-info">
+      <Panel className="share-info">
         <Row>
           <Col xs={6} md={6}>{ filename }</Col>
           <Col xs={3} md={3} xsOffset={3}>
