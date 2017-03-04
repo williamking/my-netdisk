@@ -39,7 +39,6 @@ gulp.task('server-restart', () => {
   server.restart();
 })
 
-
 gulp.task('watch', () => {
   gulp.watch(['app/*', 'app/**/*'], gulpSync.sync(['clean', 'webpack', 'reload']));
   gulp.watch(['config.js', 'app.js', 'models/*', 'controllers/*', 'routers/*', 'middlewares/*'], gulpSync.sync(['server-restart', 'reload']));
