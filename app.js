@@ -17,7 +17,6 @@ setDb();
 app.keys = ['ni ke wang nai zi ma'];
 
 let port;
-console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV == 'development') {
   port = 8000
 } else {
@@ -25,7 +24,7 @@ if (process.env.NODE_ENV == 'development') {
 }
 
 app.listen(port, () => {
-  console.log('server listening to port 8000');
+  console.log(`server listening to port ${port}`);
 });
 
 // set middlewares
