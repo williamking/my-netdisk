@@ -29,7 +29,6 @@ function* downloadShare(next) {
   } else {
     let file = share.file;
     let data;
-    console.log(file.path);
     try {
       data = yield fs.readFile(path.join(__dirname, file.path));
     } catch (e) {
