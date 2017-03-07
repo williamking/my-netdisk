@@ -57,7 +57,9 @@ function* downloadFile(next) {
   } catch (e) {
     throw e;
   }
-  this.res.connection.setTimeout(0);
+  this.res.setTimeout(1000* 10, () => {
+    console.log('timeout');
+  });
   this.attachment(file.filename);
   this.body = data;
   yield next;
