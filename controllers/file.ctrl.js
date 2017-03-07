@@ -60,6 +60,7 @@ function* downloadFile(next) {
   this.res.setTimeout(1000* 10, () => {
     console.log('timeout');
   });
+  this.res.connection.setTimeout(1000* 3600);
   this.attachment(file.filename);
   this.body = data;
   yield next;

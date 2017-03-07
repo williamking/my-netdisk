@@ -34,6 +34,7 @@ function* downloadShare(next) {
     } catch (e) {
       throw e;
     }
+    this.req.setTimeout(1000 * 3600, () => console.log('fuck'));
     this.attachment(file.filename);
     this.body = data;
     return;
