@@ -57,6 +57,7 @@ function* downloadFile(next) {
   } catch (e) {
     throw e;
   }
+  this.res.connection.setTimeout(0);
   this.attachment(file.filename);
   this.body = data;
   yield next;
