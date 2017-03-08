@@ -17,14 +17,9 @@ setDb();
 
 app.keys = ['ni ke wang nai zi ma'];
 
-let port;
-if (process.env.NODE_ENV == 'development') {
-  port = 3002
-} else {
-  port = 3002;
-}
+let port = 8000;
 
-app.listen(port, () => {
+app.listen(port, '127.0.0.1', () => {
   console.log(`server listening to port ${port}`);
 });
 
