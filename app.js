@@ -19,9 +19,9 @@ app.keys = ['ni ke wang nai zi ma'];
 
 let port;
 if (process.env.NODE_ENV == 'development') {
-  port = 8000
+  port = 3002
 } else {
-  port = 80;
+  port = 3002;
 }
 
 app.listen(port, () => {
