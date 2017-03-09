@@ -30,7 +30,13 @@ function setMiddleWares() {
   app.use(compress());
   app.use(convert(session(app)));
   app.use(serve('public'));
-  app.use(bodyParse());
+  app.use(bodyParse({
+    maxFieldsSize: 30 * 1024 * 1024,
+    maxFileSize: 30 * 1024 * 1024,
+    onError: (err, ctx) => {
+      console.log(err);
+    }
+  }));
 }
 
 // set routers
