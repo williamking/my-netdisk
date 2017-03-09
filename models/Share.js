@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const fs = require('co-fs');
 const path = require('path');
 
 const ShareSchema = new mongoose.Schema({

@@ -10,6 +10,7 @@ const bodyParse = require('koa-better-body');
 const session = require('koa-session');
 const convert = require('koa-convert');
 const compress = require('koa-compress');
+const logger = require('koa-logger');
 
 setMiddleWares();
 setRouter();
@@ -25,6 +26,7 @@ app.listen(port, '127.0.0.1', () => {
 
 // set middlewares
 function setMiddleWares() {
+  app.use(logger());
   app.use(compress());
   app.use(convert(session(app)));
   app.use(serve('public'));

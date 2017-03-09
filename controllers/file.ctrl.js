@@ -1,6 +1,8 @@
-const fs = require('co-fs');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
 const File = require('../models/File.js');
 const path = require('path');
+const { send } = require('../service/FilePartialUploader.js');
 
 module.exports = {
   downloadFile,
@@ -13,7 +15,7 @@ function* receiveFile(next) {
   try {
     let id = this.params.file;
     let file = this.request.files[0];
-    let buffer = yield fs.readFile(file.path);
+    let buffer = yield fs.readFileAsync(file.path);
     let { index } = this.request.fields;
     index = parseInt(index);
     let block = {
@@ -51,19 +53,23 @@ function* downloadFile(next) {
   } catch (e) {
     throw e;
   }
-  let data;
-  try {
-    data = yield fs.readFile(path.join(__dirname, file.path));
-  } catch (e) {
-    throw e;
+  if (this.query.mode == 'stream') {
+    return send(this, path.join(__dirname, file.path));
+  } else {
+    let data;
+    try {
+      data = fs.createReadStream(path.join(__dirname, file.path));
+    } catch (e) {
+      throw e;
+    }
+    this.res.setTimeout(1000* 10, () => {
+      console.log('timeout');
+    });
+    this.res.connection.setTimeout(1000* 3600);
+    this.attachment(file.filename);
+    this.body = data;
+    yield next;
   }
-  this.res.setTimeout(1000* 10, () => {
-    console.log('timeout');
-  });
-  this.res.connection.setTimeout(1000* 3600);
-  this.attachment(file.filename);
-  this.body = data;
-  yield next;
 }
 
 function* showFile(next) {

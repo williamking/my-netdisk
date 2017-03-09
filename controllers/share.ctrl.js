@@ -1,6 +1,8 @@
 const Share = require('../models/Share.js');
-const fs = require('co-fs');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
 const path = require('path');
+const { send } = require('../service/FilePartialUploader.js');
 
 module.exports = {
   createShare,
@@ -9,7 +11,7 @@ module.exports = {
 };
 
 function* downloadShare(next) {
-  let { id } = this.query;
+  let { id, mode } = this.query;
   let share;
   try {
     share = yield Share.getById(id);
@@ -28,9 +30,11 @@ function* downloadShare(next) {
     };
   } else {
     let file = share.file;
+
+    if (mode == 'stream') return send(this, path.join(__dirname, file.path));
     let data;
     try {
-      data = yield fs.readFile(path.join(__dirname, file.path));
+      data = fs.createReadStream(path.join(__dirname, file.path));
     } catch (e) {
       throw e;
     }

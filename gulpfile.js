@@ -50,7 +50,8 @@ gulp.task('build', gulpSync.sync(['clean', 'webpack', 'minify']));
 
 gulp.task('watch', () => {
   gulp.watch(['app/*', 'app/**/*'], gulpSync.sync(['clean', 'webpack', 'reload']));
-  gulp.watch(['config.js', 'app.js', 'models/*', 'controllers/*', 'routers/*', 'middlewares/*'], gulpSync.sync(['server-restart', 'reload']));
+  gulp.watch(['config.js', 'app.js', 'models/*', 'controllers/*', 'routers/*',
+    'middlewares/*', 'service/*'], gulpSync.sync(['server-restart', 'reload']));
 });
 
 gulp.task('default', gulpSync.sync(['clean', 'webpack', 'server-start',

@@ -36,6 +36,12 @@ export const CLOSE_MODAL = 'CLOSE_MODAL'
 export const OPEN_MODAL = 'OPEN_MODAL'
 export const UPDATE_SHARE_LINK = 'UPDATE_SHARE_LINK'
 
+/*
+ * 分享播放器状态
+ */
+export const OPEN_PLAYER = 'OPEN_PLAYER';
+export const CLOSE_PLAYER = 'CLOSE_PLAYER';
+
 export function addFile(file, action) {
   return {
     type: ADD_FILE,
@@ -214,6 +220,18 @@ export function updateFileBlocks(index, uploadedBlocks, blockNum) {
     index,
     info
   }
+}
+
+export function closePlayer() {
+  return {
+    type: CLOSE_PLAYER
+  };
+}
+
+export function openPlayer() {
+  return {
+    type: OPEN_PLAYER
+  };
 }
 
 function parseToFiles(json) {

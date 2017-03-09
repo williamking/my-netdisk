@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { ADD_FILE, DELETE_FILE, UPDATE_PROGRESS, UPLOAD_FILE, UPDATE_BLOCKS,
   STOPED, PAUSE_UPLOAD, RECEIVE_FILE, CHOOSE_FILE, UPDATE_USERNAME, UPDATE_PASSWORD,
   LOGIN, LOGOUT, UPDATE_SHARE, OPEN_MODAL, UPDATE_SHARE_LINK,
-  CLOSE_MODAL} from '../actions/actions.js'
+  CLOSE_MODAL, OPEN_PLAYER, CLOSE_PLAYER} from '../actions/actions.js'
 import { routerReducer } from 'react-router-redux'
 
 function username(state = '', action) {
@@ -161,12 +161,28 @@ function shareModal(state={
   }
 }
 
+const player = combineReducers({
+  show
+});
+
+function show(state = false, action) {
+  switch (action.type) {
+    case OPEN_PLAYER:
+      return true;
+    case CLOSE_PLAYER:
+      return false;
+    default:
+      return state;
+  }
+}
+
 const FileApp = combineReducers({
   auth,
   files,
   filename,
   shareFile,
   shareModal,
+  player,
   routing: routerReducer
 });
 

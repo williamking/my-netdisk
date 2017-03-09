@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const fs = require('co-fs');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
 const path = require('path');
 
 const FileSchema = new mongoose.Schema({
@@ -80,9 +81,9 @@ function* receiveOneBlock(block) {
     let { blockSize, uploadedBlocks } = file;
     if (uploadedBlocks + 1 == index) {
       // 对文件进行分块合并
-      let fd = yield fs.open(path.join(__dirname, file.path), 'a+');
+      let fd = yield fs.openAsync(path.join(__dirname, file.path), 'a+');
       try {
-        yield fs.write(fd, buffer, 0, buffer.length, blockSize * uploadedBlocks);
+        yield fs.writeAsync(fd, buffer, 0, buffer.length, blockSize * uploadedBlocks);
       } catch (e) {
         console.log(e);
         throw e;
