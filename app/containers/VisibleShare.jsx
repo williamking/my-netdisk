@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Share from '../components/Share.jsx'
-import { getShareFile, closePlayer, openPlayer } from '../actions/actions'
+import { getShareFile, closePlayer, openPlayer, canvasPlay, canvasPause,
+  canvasShow, canvasHide, toFilter } from '../actions/actions'
 import fetch from 'isomorphic-fetch'
 
 const mediaTypes = {
@@ -21,7 +22,9 @@ function mapStateToProps(state, ownProps) {
     id: ownProps.params.id,
     expire_time: state.shareFile.expire_time,
     src: `/api/shares/download?id=${ownProps.params.id}&mode=stream`,
-    playerShow: state.player.show
+    playerShow: state.player.show,
+    canvasState: state.player.canvasState,
+    filter: state.player.filter
   }
 }
 
@@ -41,6 +44,23 @@ function mapDispatchToProps(dispatch) {
     },
     handleHide: () => {
       dispatch(closePlayer());
+    },
+    handlePlay: (canvas, video) => {
+      dispatch(canvasPlay(canvas, video));
+    },
+    handlePause: () => {
+      dispatch(canvasPause());
+    },
+    handleCanvasShow: () => {
+      dispatch(canvasShow());
+    },
+    handleCanvasHide: () => {
+      dispatch(canvasHide());
+    },
+    handleToFilter: (type) => {
+      return () => {
+        dispatch(toFilter(type));
+      };
     }
   };
 }

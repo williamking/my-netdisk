@@ -1,3 +1,11 @@
+import BlackWhiteFilter from '../containers/filters/BlackWhiteFilter'
+import LaplaceFilter from '../containers/filters/LaplaceFilter'
+
+const filters = {
+  'GREY': BlackWhiteFilter,
+  'LAPALACE': LaplaceFilter
+};
+
 /*
  * action类型
  */
@@ -41,6 +49,17 @@ export const UPDATE_SHARE_LINK = 'UPDATE_SHARE_LINK'
  */
 export const OPEN_PLAYER = 'OPEN_PLAYER';
 export const CLOSE_PLAYER = 'CLOSE_PLAYER';
+export const PLAY_CANVAS = 'PLAY_CANVAS';
+export const PAUSE_CANVAS = 'PAUSE_CANVAS';
+export const SHOW_CANVAS = 'SHOW_CANVAS';
+export const HIDE_CANVAS = 'HIDE_CANVAS';
+
+/*
+ * 播放器滤镜
+ */
+export const TO_GREY = 'TO_GREY';
+export const TO_LAPLACE = 'TO_LAPLACE';
+export const TO_NORMAL = 'TO_NORMAL';
 
 export function addFile(file, action) {
   return {
@@ -231,6 +250,57 @@ export function closePlayer() {
 export function openPlayer() {
   return {
     type: OPEN_PLAYER
+  };
+}
+
+export function canvasPlay(canvas, video) {
+  return (dispatch, getState) => {
+    dispatch({ type: PLAY_CANVAS });
+    let ctx = canvas.getContext('2d');
+    let width = document.querySelectorAll('.modal-body')[0].width;
+    let videoStyle = window.getComputedStyle(video);
+    canvas.style.width = videoStyle.width;
+    canvas.style.height = videoStyle.height;
+    canvas.height = parseInt(videoStyle.height);
+    canvas.width = parseInt(videoStyle.width);
+
+    let flush = function() {
+      let state = getState();
+      let {canvasState, filter} = state.player;
+      if (!video.ended) {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        if (filter != 'NORMAL')
+          filters[filter](ctx, canvas.width, canvas.height);
+        if (canvasState == 'PLAYED') {
+          window.requestAnimationFrame(flush);
+        }
+      }
+    };
+    flush();
+  };
+}
+
+export function canvasPause() {
+  return {
+    type: PAUSE_CANVAS
+  };
+}
+
+export function canvasShow() {
+  return {
+    type: SHOW_CANVAS
+  };
+}
+
+export function canvasHide() {
+  return {
+    type: HIDE_CANVAS
+  };
+}
+
+export function toFilter(type) {
+  return {
+    type
   };
 }
 

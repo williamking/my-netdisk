@@ -2,7 +2,8 @@ import { combineReducers } from 'redux'
 import { ADD_FILE, DELETE_FILE, UPDATE_PROGRESS, UPLOAD_FILE, UPDATE_BLOCKS,
   STOPED, PAUSE_UPLOAD, RECEIVE_FILE, CHOOSE_FILE, UPDATE_USERNAME, UPDATE_PASSWORD,
   LOGIN, LOGOUT, UPDATE_SHARE, OPEN_MODAL, UPDATE_SHARE_LINK,
-  CLOSE_MODAL, OPEN_PLAYER, CLOSE_PLAYER} from '../actions/actions.js'
+  CLOSE_MODAL, OPEN_PLAYER, CLOSE_PLAYER, PLAY_CANVAS, PAUSE_CANVAS,
+  SHOW_CANVAS, HIDE_CANVAS, TO_GREY, TO_LAPLACE, TO_NORMAL} from '../actions/actions.js'
 import { routerReducer } from 'react-router-redux'
 
 function username(state = '', action) {
@@ -162,7 +163,9 @@ function shareModal(state={
 }
 
 const player = combineReducers({
-  show
+  show,
+  canvasState,
+  filter
 });
 
 function show(state = false, action) {
@@ -171,6 +174,34 @@ function show(state = false, action) {
       return true;
     case CLOSE_PLAYER:
       return false;
+    default:
+      return state;
+  }
+}
+
+function canvasState(state = 'HIDED', action) {
+  switch (action.type) {
+    case PLAY_CANVAS:
+      return 'PLAYED';
+    case PAUSE_CANVAS:
+      return 'PAUSED';
+    case SHOW_CANVAS:
+      return 'SHOWED';
+    case HIDE_CANVAS:
+      return 'HIDED';
+    default:
+      return state;
+  }
+}
+
+function filter(state='NORMAL', action) {
+  switch (action.type) {
+    case TO_GREY:
+      return 'GREY';
+    case TO_LAPLACE:
+      return 'LAPALACE';
+    case TO_NORMAL:
+      return 'NORMAL';
     default:
       return state;
   }
